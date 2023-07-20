@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Launch the bridge -->
+  <node name="parameter_bridge_gz_subscriber" pkg="ros_gz_bridge"
+        type="parameter_bridge"
+        args="/bool@std_msgs/Bool@gz.msgs.Boolean
+              /color@std_msgs/ColorRGBA@gz.msgs.Color
+              /empty@std_msgs/Empty@gz.msgs.Empty
+              /int32@std_msgs/Int32@gz.msgs.Int32
+              /float@std_msgs/Float32@gz.msgs.Float
+              /double@std_msgs/Float64@gz.msgs.Double
+              /header@std_msgs/Header@gz.msgs.Header
+              /string@std_msgs/String@gz.msgs.StringMsg
+              /quaternion@geometry_msgs/Quaternion@gz.msgs.Quaternion
+              /vector3@geometry_msgs/Vector3@gz.msgs.Vector3d
+              /clock@rosgraph_msgs/Clock@gz.msgs.Clock
+              /point@geometry_msgs/Point@gz.msgs.Vector3d
+              /pose@geometry_msgs/Pose@gz.msgs.Pose
+              /pose_array@geometry_msgs/PoseArray@gz.msgs.Pose_V
+              /pose_stamped@geometry_msgs/PoseStamped@gz.msgs.Pose
+              /transform@geometry_msgs/Transform@gz.msgs.Pose
+              /transform_stamped@geometry_msgs/TransformStamped@gz.msgs.Pose
+              /tf2_message@tf2_msgs/TFMessage@gz.msgs.Pose_V
+              /twist@geometry_msgs/Twist@gz.msgs.Twist
+              /image@sensor_msgs/Image@gz.msgs.Image
+              /camera_info@sensor_msgs/CameraInfo@gz.msgs.CameraInfo
+              /fluid_pressure@sensor_msgs/FluidPressure@gz.msgs.FluidPressure
+              /imu@sensor_msgs/Imu@gz.msgs.IMU
+              /laserscan@sensor_msgs/LaserScan@gz.msgs.LaserScan
+              /magnetic@sensor_msgs/MagneticField@gz.msgs.Magnetometer
+              /navsat@sensor_msgs/NavSatFix@gz.msgs.NavSat
+              /actuators@mav_msgs/Actuators@gz.msgs.Actuators
+              /map@nav_msgs/OccupancyGrid@gz.msgs.OccupancyGrid
+              /odometry@nav_msgs/Odometry@gz.msgs.Odometry
+              /pointcloud2@sensor_msgs/PointCloud2@gz.msgs.PointCloudPacked
+              /joint_states@sensor_msgs/JointState@gz.msgs.Model
+              /battery_state@sensor_msgs/BatteryState@gz.msgs.BatteryState
+              /marker@visualization_msgs/Marker@gz.msgs.Marker
+              /marker_array@visualization_msgs/MarkerArray@gz.msgs.Marker_V"
+  />
+
+  <!-- Launch the ROS publisher -->
+  <node name="ros_publisher" pkg="ros_gz_bridge" type="ros_publisher" />
+
+</launch>

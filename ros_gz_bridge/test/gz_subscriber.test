@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+
+  <include file="$(find ros_gz_bridge)/test/launch/test_gz_subscriber.launch">
+  </include>
+
+  <test test-name="ros_gz" pkg="ros_gz_bridge" type="test_gz_subscriber" time-limit="60.0" />
+
+</launch>
