@@ -73,7 +73,7 @@ private:
   tesseract_gui::EntityContainer::Ptr entity_container_;
   gz::rendering::ScenePtr scene_;
   gz::sensors::Manager sensor_manager_;
-  std::chrono::steady_clock::time_point start_time_;
+  std::chrono::high_resolution_clock::time_point start_time_;
   int current_revision_{0};
   std::string prefix_;
   std::mutex mutex_;
