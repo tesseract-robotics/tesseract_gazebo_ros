@@ -1,0 +1,19 @@
+<package format="3">
+  <name>tesseract_sensor_simulator</name>
+  <version>0.1.0</version>
+  <description>Tesseract Sensor Simulator Leveraging and Gazebo Sensors</description>
+  <license>Apache 2.0</license>
+  <maintainer email="levi.armstrong@gmail.com">Levi Armstrong</maintainer>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+
+  <depend>tesseract_common</depend>
+  <depend>tesseract_qt</depend>
+  <depend>tesseract_monitoring</depend>
+  <depend>ros_gz_bridge</depend>
+  <depend>gz-sensors7</depend>
+  <depend>gz-msgs9</depend>
+  <depend>gz-transport12</depend>
+
+</package>
