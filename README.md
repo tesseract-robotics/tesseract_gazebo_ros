@@ -1,3 +1,15 @@
 # tesseract_gazebo_ros
 
-rosrun ros_gz_bridge parameter_bridge /gz/sensors/examples/camera_sensor@sensor_msgs/Image@gz.msgs.Image /gz/sensors/examples/depth_sensor@sensor_msgs/Image@gz.msgs.Image /gz/sensors/examples/depth_sensor/points@sensor_msgs/PointCloud2@gz.msgs.PointCloudPacked
+This contain functionality to simulate sensors within ROS leveraging Gazebo Sensors.
+
+Below is an example using a RGB camera and be launch by using the following command.
+
+``` bash
+roslaunch tesseract_sensor_simulator sensor_simulator_demo.launch
+```
+
+![Demo](example.png)
+
+
+## TODO
+- Allow loading sensors and lights from Gazebo XML

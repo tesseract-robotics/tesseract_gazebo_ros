@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
   <arg name="rviz" default="true"/>
-  <arg name="monitor_namespace"/>
+  <arg name="monitor_namespace" default="demo_sensor_simulator"/>
   <arg name="monitored_namespace" default=""/>
   <arg name="robot_description" default="robot_description"/>
   <arg name="discrete_plugin" default="BulletDiscreteBVHManager"/>
@@ -29,8 +29,12 @@
   </node>
 
   <!-- Launch visualization -->
-  <node if="$(arg rviz)" pkg="rviz" type="rviz" name="sensor_simulator_rviz" />
+  <node if="$(arg rviz)" pkg="rviz" type="rviz" name="sensor_simulator_rviz" args="-d $(find tesseract_sensor_simulator)/config/demo.rviz" />
 
   <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" respawn="true"/>
 
+  <node pkg="ros_gz_bridge" type="parameter_bridge" name="parameter_bridge"
+     args="/gz/sensors/examples/camera_sensor@sensor_msgs/Image@gz.msgs.Image
+           /gz/sensors/examples/depth_sensor@sensor_msgs/Image@gz.msgs.Image
+           /gz/sensors/examples/depth_sensor/points@sensor_msgs/PointCloud2@gz.msgs.PointCloudPacked" />
 </launch>
