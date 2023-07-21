@@ -74,6 +74,7 @@ private:
   std::chrono::steady_clock::time_point start_time_;
   int current_revision_{0};
   std::string prefix_;
+  std::mutex mutex_;
 
   bool loadSensors();
 

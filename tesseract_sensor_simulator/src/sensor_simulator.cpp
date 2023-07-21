@@ -46,6 +46,7 @@ SensorSimulator::SensorSimulator(tesseract_environment::EnvironmentMonitor::Ptr 
 
 void SensorSimulator::update()
 {
+  std::scoped_lock render_lock(mutex_);
   if (scene_ == nullptr && env_monitor_->environment().isInitialized())
   {
     auto* engine = gz::rendering::engine(scene_properties_.engine_name);
@@ -77,16 +78,19 @@ void SensorSimulator::update()
     root->AddChild(light0);
 
     // Load scene
-    auto lock = env_monitor_->environment().lockRead();
-    tesseract_gui::loadSceneGraph(*scene_, *entity_container_, *env_monitor_->environment().getSceneGraph());
+    {
+      auto lock = env_monitor_->environment().lockRead();
+      tesseract_gui::loadSceneGraph(*scene_, *entity_container_, *env_monitor_->environment().getSceneGraph());
 
-    // Set the initial state
-    tesseract_scene_graph::SceneState scene_state = env_monitor_->environment().getState();
-    tesseract_gui::setSceneState(*scene_, *entity_container_, scene_state.link_transforms);
+      // Set the initial state
+      tesseract_scene_graph::SceneState scene_state = env_monitor_->environment().getState();
+      tesseract_gui::setSceneState(*scene_, *entity_container_, scene_state.link_transforms);
 
-    // Set the tesseract event callback
+      // Set the tesseract event callback
+      current_revision_ = env_monitor_->environment().getRevision();
+    }
+    // Add event callback
     std::size_t uuid = std::hash<SensorSimulator*>()(this);
-    current_revision_ = env_monitor_->environment().getRevision();
     env_monitor_->environment().addEventCallback(uuid,[this](const tesseract_environment::Event& event){ tesseractEventFilter(event); });
 
     // load sensors
@@ -255,6 +259,7 @@ void SensorSimulator::tesseractEventFilter(const tesseract_environment::Event& e
       }
       if (reset)
       {
+        std::scoped_lock render_lock(mutex_);
         // Clear Scene
         clearScene(*scene_, *entity_container_);
         entity_container_->clear();
@@ -267,6 +272,7 @@ void SensorSimulator::tesseractEventFilter(const tesseract_environment::Event& e
     }
     case tesseract_environment::Events::SCENE_STATE_CHANGED:
     {
+      std::scoped_lock lock(mutex_);
       const auto& e = static_cast<const tesseract_environment::SceneStateChangedEvent&>(event);
       setSceneState(*scene_, *entity_container_, e.state.link_transforms);
       break;
