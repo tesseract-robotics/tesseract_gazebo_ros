@@ -97,11 +97,17 @@ void SensorSimulator::update()
 
     // load sensors
     loadSensors();
-    start_time_ = std::chrono::steady_clock::now();
-    sensor_manager_.RunOnce(std::chrono::steady_clock::now().time_since_epoch(), true);
+
+    // Must use high_resolution_clock to match ros time
+    start_time_ = std::chrono::high_resolution_clock::time_point{};
+    sensor_manager_.RunOnce(std::chrono::high_resolution_clock::duration::zero(), true);
   }
 
-  sensor_manager_.RunOnce(std::chrono::steady_clock::now().time_since_epoch());
+  if (scene_ != nullptr)
+  {
+    // Must use high_resolution_clock to match ros time
+    sensor_manager_.RunOnce(std::chrono::high_resolution_clock::now() - start_time_);
+  }
 }
 
 bool SensorSimulator::loadSensors()
